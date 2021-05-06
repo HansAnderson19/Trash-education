@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "461823034179",
+    "firebase_url": "https://trash-education-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "trash-education",
+    "storage_bucket": "trash-education.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:461823034179:android:0d18170811dbff32a325f6",
+        "android_client_info": {
+          "package_name": "com.trashed.trasheducation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "461823034179-3r5n504m6v5ds8nlne57qrd8fnqmkbph.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWAtDtg2eq4AFXqKyWHJcaozgvZdxIsNQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "461823034179-3r5n504m6v5ds8nlne57qrd8fnqmkbph.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
