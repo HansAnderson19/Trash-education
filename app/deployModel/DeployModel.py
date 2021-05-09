@@ -13,7 +13,7 @@ source = ml.TFLiteGCSModelSource.from_tflite_model_file('file_name.tflite')
 tflite_format = ml.TFLiteFormat(model_source=source)
 
 model = ml.Model(
-    display_name="filename", #name to download the model
+    display_name="trash_edu", #name to download the model
     tags=["examples"],
     model_format=tflite_format
 )
