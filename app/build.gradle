@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.trashed.trasheducation"
-        minSdkVersion 24
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -43,6 +43,7 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+<<<<<<< HEAD
 
     // Import the Firebase BoM
     implementation platform('com.google.firebase:firebase-bom:27.1.0')
@@ -53,4 +54,15 @@ dependencies {
     implementation 'com.google.firebase:firebase-ml-modeldownloader'
     // Also declare the dependency for the TensorFlow Lite library and specify its version
     implementation 'org.tensorflow:tensorflow-lite:2.3.0'
+=======
+    implementation 'com.gauravk.bubblenavigation:bubblenavigation:1.0.7'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
+
+    // CameraX core library using camera2 implementation
+    implementation "androidx.camera:camera-camera2:$camerax_version"
+    // CameraX Lifecycle Library
+    implementation "androidx.camera:camera-lifecycle:$camerax_version"
+    // CameraX View class
+    implementation "androidx.camera:camera-view:1.0.0-alpha19"
+>>>>>>> abe6400191c4a187b336c3594ef4130f9d2a5f11
 }

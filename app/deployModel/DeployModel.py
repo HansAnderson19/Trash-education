@@ -3,18 +3,18 @@ from firebase_admin import ml
 from firebase_admin import credentials
 
 firebase_admin.initialize_app(
-    credentials.Certificate('/private_key/service_account_key.json'),
+    credentials.Certificate('D:/credentials.json'),
     options={
         'storageBucket': 'trash-education.appspot.com' #cloud storage location
     }
 )
 
-source = ml.TFLiteGCSModelSource.from_tflite_model_file('file_name.tflite')
+source = ml.TFLiteGCSModelSource.from_tflite_model_file('D:/Data Qolby/School/Bangkit/Capstone Project/Model/my_model.tflite')
 tflite_format = ml.TFLiteFormat(model_source=source)
 
 model = ml.Model(
     display_name="trash_edu", #name to download the model
-    tags=["examples"],
+    tags=["trash_edu"],
     model_format=tflite_format
 )
 
