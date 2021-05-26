@@ -1,6 +1,188 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/BackButton2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/back"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/PreviewImage"
+                android:layout_width="345dp"
+                android:layout_height="165dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="25dp"
+                android:background="@drawable/rectangle_outlined"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/BackButton2" />
+
+            <TextView
+                android:id="@+id/TrashLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text=""
+                android:textSize="14dp"
+                android:textColor="@color/green"
+                android:fontFamily="@font/semibold"
+                app:layout_constraintEnd_toEndOf="@+id/TrashArticle"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/TrashArticle"
+                app:layout_constraintTop_toBottomOf="@+id/PreviewImage" />
+
+            <TextView
+                android:id="@+id/TrashArticle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="25dp"
+                android:textAlignment="viewStart"
+                android:justificationMode="inter_word"
+                android:text=""
+                android:textSize="12dp"
+                android:textColor="@color/gray"
+                android:fontFamily="@font/regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.017"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/TrashLabel" />
+
+            <TextView
+                android:id="@+id/ImpactLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Impact"
+                android:textSize="14dp"
+                android:textColor="@color/green"
+                android:fontFamily="@font/semibold"
+                app:layout_constraintEnd_toEndOf="@+id/ImpactArticle"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/ImpactArticle"
+                app:layout_constraintTop_toBottomOf="@+id/TrashArticle" />
+
+            <TextView
+                android:id="@+id/ImpactArticle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="25dp"
+                android:fontFamily="@font/regular"
+                android:textAlignment="viewStart"
+                android:justificationMode="inter_word"
+                android:text=""
+                android:textColor="@color/gray"
+                android:textSize="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ImpactLabel" />
+
+            <TextView
+                android:id="@+id/OvercomeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/semibold"
+                android:text="How to overcome it?"
+                android:textColor="@color/green"
+                android:textSize="14dp"
+                app:layout_constraintEnd_toEndOf="@+id/OvercomeArticle"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/OvercomeArticle"
+                app:layout_constraintTop_toBottomOf="@+id/ImpactArticle" />
+
+            <TextView
+                android:id="@+id/OvercomeArticle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="25dp"
+                android:fontFamily="@font/regular"
+                android:justificationMode="inter_word"
+                android:text=""
+                android:textAlignment="viewStart"
+                android:textColor="@color/gray"
+                android:textSize="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/OvercomeLabel" />
+
+            <TextView
+                android:id="@+id/LinkLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/semibold"
+                android:text="See More Article:"
+                android:textColor="@color/green"
+                android:textSize="14dp"
+                app:layout_constraintEnd_toEndOf="@+id/LinkArticle"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/LinkArticle"
+                app:layout_constraintTop_toBottomOf="@+id/OvercomeArticle" />
+
+            <TextView
+                android:id="@+id/LinkArticle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="25dp"
+                android:fontFamily="@font/regular"
+                android:justificationMode="inter_word"
+                android:text=""
+                android:textAlignment="viewStart"
+                android:textColor="@color/gray"
+                android:textSize="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/LinkLabel" />
+
+            <TextView
+                android:id="@+id/VideoLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/semibold"
+                android:text="Video:"
+                android:textColor="@color/green"
+                android:textSize="14dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.072"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/LinkArticle" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

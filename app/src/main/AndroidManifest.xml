@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
         <activity android:name=".MainActivity"></activity>
-        <activity android:name=".ui.SplashScreenActivity">
+        <activity android:name=".ui.SplashScreenActivity" android:theme="@style/AppTheme.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.MenuActivity"></activity>
+        <activity android:name=".ui.ArticleActivity"></activity>
     </application>
 
 </manifest>
