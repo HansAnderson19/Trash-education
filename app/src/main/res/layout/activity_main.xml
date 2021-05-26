@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
@@ -7,92 +8,116 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/BackButton"
-        android:layout_width="24dp"
+        android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="25dp"
         android:background="@drawable/back"
-        app:layout_constraintBottom_toTopOf="@+id/Text1"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.075"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.178" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/Text1"
-        android:layout_width="337dp"
-        android:layout_height="96dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="25dp"
         android:fontFamily="@font/semibold"
         android:text="Get to know the garbage!"
         android:textColor="@color/green"
         android:textSize="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/PreviewImage"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
+        app:layout_constraintHorizontal_bias="0.7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BackButton" />
 
     <ImageView
         android:id="@+id/PreviewImage"
-        android:layout_width="330dp"
-        android:layout_height="197dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="345dp"
+        android:layout_height="165dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="25dp"
         android:background="@drawable/rectangle_outlined"
-        app:layout_constraintBottom_toTopOf="@+id/SelectImageButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/SelectImageButton"
-        android:layout_width="163dp"
-        android:layout_height="35dp"
-        android:layout_marginBottom="316dp"
-        android:background="@drawable/rectangle_filled"
-        android:fontFamily="@font/semibold"
-        android:text="Select Images"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/PreviewImage"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/TakePictureButton" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/PredictButton"
-        android:layout_width="325dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="52dp"
-        android:background="@drawable/rectangle_filled"
-        android:fontFamily="@font/semibold"
-        android:text="Predict!"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PreviewImage" />
+        app:layout_constraintTop_toBottomOf="@+id/Text1" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/TakePictureButton"
-        android:layout_width="163dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginBottom="316dp"
-        android:background="@drawable/rectangle_filled"
-        android:fontFamily="@font/semibold"
-        android:text="Select Images"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/PreviewImage" />
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:cardElevation="0dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PreviewImage">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/TakePictureButton"
+                android:layout_width="163dp"
+                android:layout_height="35dp"
+                android:background="@drawable/rectangle_filled"
+                android:fontFamily="@font/semibold"
+                android:text="Take Picture"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="15dp"
+                app:layout_constraintStart_toStartOf="@+id/PredictButton"
+                app:layout_constraintTop_toTopOf="@+id/SelectImageButton" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/SelectImageButton"
+                android:layout_width="163dp"
+                android:layout_height="35dp"
+                android:background="@drawable/rectangle_filled"
+                android:fontFamily="@font/semibold"
+                android:text="Select Images"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="15dp"
+                app:layout_constraintEnd_toEndOf="@+id/PredictButton"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/PredictButton"
+                android:layout_width="325dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="9dp"
+                android:background="@drawable/rectangle_filled"
+                android:fontFamily="@font/semibold"
+                android:text="Predict!"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/SelectImageButton" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/Text2"
-        android:layout_width="133dp"
+        android:layout_width="132dp"
         android:layout_height="41dp"
         android:background="@drawable/rectangle_outlined2"
         android:fontFamily="@font/regular"
@@ -101,32 +126,32 @@
         android:textColor="@color/gray"
         android:textSize="15dp"
         app:layout_constraintBottom_toTopOf="@+id/ArticleButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Text1"
-        app:layout_constraintVertical_bias="0.844" />
+        app:layout_constraintEnd_toEndOf="@+id/Text3"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/Text3"
+        app:layout_constraintTop_toBottomOf="@+id/Text3"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/Text3"
         android:layout_width="132dp"
         android:layout_height="22dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="24dp"
         android:fontFamily="@font/regular"
         android:text="Type of Garbage:"
         android:textAlignment="center"
         android:textColor="@color/gray"
         android:textSize="15dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PredictButton" />
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/ArticleButton"
         android:layout_width="323dp"
         android:layout_height="35dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="40dp"
         android:background="@drawable/rectangle_filled"
         android:fontFamily="@font/semibold"
         android:text="See Article"
@@ -136,5 +161,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
