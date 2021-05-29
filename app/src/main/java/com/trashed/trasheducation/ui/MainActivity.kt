@@ -1,16 +1,25 @@
 package com.trashed.trasheducation.ui
 
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
+import com.google.firebase.ml.common.modeldownload.FirebaseModelDownloadConditions
+import com.google.firebase.ml.common.modeldownload.FirebaseModelManager
+import com.google.firebase.ml.custom.FirebaseCustomRemoteModel
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.trashed.trasheducation.databinding.ActivityMainBinding
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.Interpreter
@@ -19,22 +28,29 @@ import org.tensorflow.lite.support.common.TensorProcessor
 import org.tensorflow.lite.support.common.ops.CastOp
 import org.tensorflow.lite.support.label.TensorLabel
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity: AppCompatActivity() {
 
     private lateinit var activityMainBinding: ActivityMainBinding
+    private lateinit var ImageURI : Uri
     private var state: Boolean = false
     private var result = ""
     private var modelOutput: TensorBuffer? = null
     private var interpreter: Interpreter? = null
     private var modelFile: File? = null
     private var options = Interpreter.Options()
+    private var storage: FirebaseStorage = FirebaseStorage.getInstance()
+    private var reference: StorageReference = storage.getReference()
     private val IMAGE_MEAN = 128
     private val IMAGE_STD = 128.0f
+
 
     companion object{
         const val CAMERA_CODE = 98
@@ -50,13 +66,47 @@ class MainActivity: AppCompatActivity() {
         checkStateLayout(state)
 
         activityMainBinding.TakePictureButton.setOnClickListener {
+            activityMainBinding.Text2.text = ""
             camera()
         }
 
         activityMainBinding.SelectImageButton.setOnClickListener {
+            activityMainBinding.Text2.text = " "
             gallery()
         }
 
+
+        activityMainBinding.BackButton.setOnClickListener(){
+            val intent = Intent(this, MenuActivity::class.java)
+            startActivity(intent)
+        }
+
+        activityMainBinding.ArticleButton.setOnClickListener(){
+            val intent = Intent(this, ArticleActivity::class.java)
+            startActivity(intent)
+        }
+
+        //Download model function
+        val remoteModel = FirebaseCustomRemoteModel.Builder("trash_edu").build()
+        Log.d("Info",remoteModel.toString())
+        val conditions = FirebaseModelDownloadConditions.Builder()
+            .build()
+        Log.d("Info", conditions.toString())
+        FirebaseModelManager.getInstance().download(remoteModel, conditions)
+            .addOnSuccessListener {
+                Log.i("Info", "Switching to download model")
+                FirebaseModelManager.getInstance().getLatestModelFile(remoteModel)
+                    .addOnCompleteListener {
+                        modelFile = it.result
+                        val model = modelFile
+                        if (model != null){
+                            interpreter = Interpreter(model, options)
+                        }
+                    }
+            }
+            .addOnFailureListener {
+                Log.i("Info","Failed to download model")
+            }
     }
 
     private fun camera(){
@@ -87,6 +137,26 @@ class MainActivity: AppCompatActivity() {
         }
     }
 
+    private fun uploadImage(){
+        val filename: String? = ImageURI.getLastPathSegment()
+        val ref: StorageReference = reference.child("Images/"+ filename)
+
+        ref.putFile(ImageURI)
+            .addOnSuccessListener {
+                Toast.makeText(this@MainActivity, "Successfully Upload", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener{
+                Toast.makeText(this@MainActivity, "Failed to Upload", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    fun getImageUriFromBitmap(context: Context, bitmap: Bitmap): Uri{
+        val bytes = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path = MediaStore.Images.Media.insertImage(context.contentResolver, bitmap, "Title", null)
+        return Uri.parse(path.toString())
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -97,9 +167,11 @@ class MainActivity: AppCompatActivity() {
             if (requestCode == CAMERA_CODE){
                 checkStateLayout(state)
                 img.setImageBitmap(data?.extras?.get("data") as Bitmap)
+
             }else if (requestCode == GALLERY_CODE){
                 checkStateLayout(state)
-                img.setImageURI(data?.data)
+                ImageURI = data?.data!!
+                activityMainBinding.PreviewImage.setImageURI(ImageURI)
             }
         }
 
@@ -107,12 +179,31 @@ class MainActivity: AppCompatActivity() {
             if (resultCode == RESULT_OK){
                 if (requestCode == CAMERA_CODE){
                     val bmp = data?.extras?.get("data") as Bitmap
+                    val formatter = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.US)
+                    val now = Date()
+                    val fileName: String = formatter.format(now).toString()
+                    val file = File(this.cacheDir,"image" + fileName) //Get Access to a local file.
+                    file.delete() // Delete the File, just in Case, that there was still another File
+                    file.createNewFile()
+                    val fileOutputStream = file.outputStream()
+                    val byteArrayOutputStream = ByteArrayOutputStream()
+                    bmp.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream)
+                    val bytearray = byteArrayOutputStream.toByteArray()
+                    fileOutputStream.write(bytearray)
+                    fileOutputStream.flush()
+                    fileOutputStream.close()
+                    byteArrayOutputStream.close()
+
+                    val URI = file.toUri()
+                    ImageURI = URI
+                    uploadImage()
                     makePredict(bmp)
                 }else if (requestCode == GALLERY_CODE){
                     val uri = data?.data
                     if (uri != null){
                         val imageStream = applicationContext.contentResolver.openInputStream(uri)
                         val bmpImage = BitmapFactory.decodeStream(imageStream)
+                        uploadImage()
                         makePredict(bmpImage)
                     }
                 }
@@ -178,8 +269,9 @@ class MainActivity: AppCompatActivity() {
                 }
                 val roundOff = String.format("%.2f", max)
                 result = "$keyLoop $roundOff"
+                var real = "$keyLoop"
                 Log.i("Info", "The label is $result")
-                activityMainBinding.Text2.append(result)
+                activityMainBinding.Text2.text = "$real"
                 modelOutput = TensorBuffer.createFixedSize(intArrayOf(1, 6), DataType.FLOAT32)
             }
         }

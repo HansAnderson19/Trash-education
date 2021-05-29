@@ -23,27 +23,6 @@ class MenuActivity : AppCompatActivity() {
         activityMenuBinding = ActivityMenuBinding.inflate(layoutInflater)
         setContentView(activityMenuBinding.root)
 
-        val remoteModel = FirebaseCustomRemoteModel.Builder("trash_edu").build()
-        Log.d("Info",remoteModel.toString())
-        val conditions = FirebaseModelDownloadConditions.Builder()
-            .build()
-        Log.d("Info", conditions.toString())
-        FirebaseModelManager.getInstance().download(remoteModel, conditions)
-            .addOnSuccessListener {
-                Log.i("Info", "Switching to download model")
-                FirebaseModelManager.getInstance().getLatestModelFile(remoteModel)
-                    .addOnCompleteListener {
-                        modelFile = it.result
-                        val model = modelFile
-                        if (model != null){
-                            interpreter = Interpreter(model, options)
-                        }
-                    }
-            }
-            .addOnFailureListener {
-                Log.i("Info","Failed to download model")
-            }
-
         val btnStart = activityMenuBinding.buttonStart
         btnStart.setOnClickListener{
             startActivity(Intent(this, MainActivity::class.java))
