@@ -1,7 +1,10 @@
 package com.trashed.trasheducation.ui
 
+import android.app.Activity
+import android.app.Application
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -51,6 +54,8 @@ class MainActivity: AppCompatActivity() {
     private val IMAGE_MEAN = 128
     private val IMAGE_STD = 128.0f
 
+    private var imageBitmap: Bitmap? = null
+
 
     companion object{
         const val CAMERA_CODE = 98
@@ -82,8 +87,11 @@ class MainActivity: AppCompatActivity() {
         }
 
         activityMainBinding.ArticleButton.setOnClickListener(){
-            val intent = Intent(this, ArticleActivity::class.java)
-            startActivity(intent)
+            val text = activityMainBinding.Text2.text
+            startActivity(
+                Intent(this, ArticleActivity::class.java)
+                    .putExtra("label", text)
+            )
         }
 
         //Download model function
@@ -107,6 +115,11 @@ class MainActivity: AppCompatActivity() {
             .addOnFailureListener {
                 Log.i("Info","Failed to download model")
             }
+
+        if (savedInstanceState != null){
+            val mBitmap = savedInstanceState.getParcelable<Bitmap>("bitmap")
+            activityMainBinding.PreviewImage.setImageBitmap(mBitmap)
+        }
     }
 
     private fun camera(){
@@ -167,11 +180,16 @@ class MainActivity: AppCompatActivity() {
             if (requestCode == CAMERA_CODE){
                 checkStateLayout(state)
                 img.setImageBitmap(data?.extras?.get("data") as Bitmap)
-
+                imageBitmap = data?.extras?.get("data") as Bitmap
             }else if (requestCode == GALLERY_CODE){
                 checkStateLayout(state)
                 ImageURI = data?.data!!
                 activityMainBinding.PreviewImage.setImageURI(ImageURI)
+                if (ImageURI != null){
+                    val imageStream = applicationContext.contentResolver.openInputStream(ImageURI)
+                    val bmpImage = BitmapFactory.decodeStream(imageStream)
+                    imageBitmap = bmpImage
+                }
             }
         }
 
@@ -289,6 +307,11 @@ class MainActivity: AppCompatActivity() {
             activityMainBinding.Text3.visibility = View.INVISIBLE
             activityMainBinding.ArticleButton.visibility = View.INVISIBLE
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        if (imageBitmap != null) outState.putParcelable("bitmap", imageBitmap)
     }
 
 }
