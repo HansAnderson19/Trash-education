@@ -1,13 +1,11 @@
 package com.trashed.trasheducation.ui
 
-import android.app.Activity
-import android.app.Application
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -17,7 +15,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
+import androidx.core.view.drawToBitmap
 import com.google.firebase.ml.common.modeldownload.FirebaseModelDownloadConditions
 import com.google.firebase.ml.common.modeldownload.FirebaseModelManager
 import com.google.firebase.ml.custom.FirebaseCustomRemoteModel
@@ -68,6 +68,7 @@ class MainActivity: AppCompatActivity() {
         activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(activityMainBinding.root)
 
+        state = false
         checkStateLayout(state)
 
         activityMainBinding.TakePictureButton.setOnClickListener {
@@ -81,18 +82,12 @@ class MainActivity: AppCompatActivity() {
         }
 
 
-        activityMainBinding.BackButton.setOnClickListener(){
+        activityMainBinding.BackButton.setOnClickListener{
             val intent = Intent(this, MenuActivity::class.java)
             startActivity(intent)
         }
 
-        activityMainBinding.ArticleButton.setOnClickListener(){
-            val text = activityMainBinding.Text2.text
-            startActivity(
-                Intent(this, ArticleActivity::class.java)
-                    .putExtra("label", text)
-            )
-        }
+
 
         //Download model function
         val remoteModel = FirebaseCustomRemoteModel.Builder("trash_edu").build()
@@ -120,6 +115,31 @@ class MainActivity: AppCompatActivity() {
             val mBitmap = savedInstanceState.getParcelable<Bitmap>("bitmap")
             activityMainBinding.PreviewImage.setImageBitmap(mBitmap)
         }
+    }
+
+    private fun resizeCheck(bmp: Bitmap): Bitmap{
+        var width = bmp.width
+        var height = bmp.height
+
+        if ((bmp.width * bmp.height) > 1024000){
+            var intScale = 0f
+            if (bmp.width > bmp.height){
+//                intScale = (bmp.width / bmp.height).toFloat()
+//                width = ((400 * intScale) + 400).toInt()
+                width = 600
+                height = 400
+            }else if (bmp.width < bmp.height){
+                /*intScale = (bmp.height / bmp.width).toFloat()
+                height = ((400 * intScale) + 400).toInt()*/
+                height = 600
+                width = 400
+            }else if (bmp.width == bmp.height){
+                width = 480
+                height = 480
+            }
+        }
+
+        return Bitmap.createScaledBitmap(bmp, width, height, true)
     }
 
     private fun camera(){
@@ -182,6 +202,31 @@ class MainActivity: AppCompatActivity() {
                     val imageStream = applicationContext.contentResolver.openInputStream(ImageURI)
                     val bmpImage = BitmapFactory.decodeStream(imageStream)
                     imageBitmap = bmpImage
+                }
+            }
+        }
+
+        activityMainBinding.ArticleButton.setOnClickListener{
+            val text = activityMainBinding.Text2.text
+            if (requestCode == CAMERA_CODE){
+                val bmpImg = activityMainBinding.PreviewImage.drawable.toBitmap()
+                val newBmpImg = resizeCheck(bmpImg)
+                startActivity(
+                    Intent(this, ArticleActivity::class.java)
+                        .putExtra("label", text)
+                        .putExtra("img", newBmpImg)
+                )
+            }else if (requestCode == GALLERY_CODE){
+                val img = data?.data
+                if (img != null){
+                    val imageStream = applicationContext.contentResolver.openInputStream(img)
+                    val newImg = BitmapFactory.decodeStream(imageStream)
+                    val newBmp = resizeCheck(newImg)
+                    startActivity(
+                        Intent(this, ArticleActivity::class.java)
+                            .putExtra("label", text)
+                            .putExtra("img", newBmp)
+                    )
                 }
             }
         }

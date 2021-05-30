@@ -1,11 +1,11 @@
 package com.trashed.trasheducation.ui
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.trashed.trasheducation.MainActivity
 import com.trashed.trasheducation.R
 import com.trashed.trasheducation.data.source.remote.response.ArticleResponse
 import com.trashed.trasheducation.databinding.ActivityArticleBinding
@@ -24,6 +24,11 @@ class ArticleActivity :AppCompatActivity(){
 
         var backButton = findViewById(R.id.BackButton2) as Button
         val text = intent.getStringExtra("label")
+        val img: Bitmap? = intent.getParcelableExtra("img")
+        if (img != null){
+            activityArticleBinding.PreviewImage.setImageBitmap(img)
+        }
+
 
         val factory = ViewModelFactory.getInstance()
         val viewModel = ViewModelProvider(this, factory)[ArticleViewModel::class.java]
