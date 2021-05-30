@@ -1,10 +1,7 @@
 package com.trashed.trasheducation.ui
 
-import android.app.Activity
-import android.app.Application
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -18,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import androidx.core.view.drawToBitmap
 import com.google.firebase.ml.common.modeldownload.FirebaseModelDownloadConditions
 import com.google.firebase.ml.common.modeldownload.FirebaseModelManager
 import com.google.firebase.ml.custom.FirebaseCustomRemoteModel
@@ -81,16 +79,18 @@ class MainActivity: AppCompatActivity() {
         }
 
 
-        activityMainBinding.BackButton.setOnClickListener(){
+        activityMainBinding.BackButton.setOnClickListener{
             val intent = Intent(this, MenuActivity::class.java)
             startActivity(intent)
         }
 
-        activityMainBinding.ArticleButton.setOnClickListener(){
+        activityMainBinding.ArticleButton.setOnClickListener{
             val text = activityMainBinding.Text2.text
+            val img: Bitmap = activityMainBinding.PreviewImage.drawToBitmap()
             startActivity(
                 Intent(this, ArticleActivity::class.java)
                     .putExtra("label", text)
+                    .putExtra("img", img)
             )
         }
 
