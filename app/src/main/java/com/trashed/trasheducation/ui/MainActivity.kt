@@ -208,7 +208,6 @@ class MainActivity: AppCompatActivity() {
 
         activityMainBinding.ArticleButton.setOnClickListener{
             val text = activityMainBinding.Text2.text
-            if (requestCode == CAMERA_CODE){
                 val bmpImg = activityMainBinding.PreviewImage.drawable.toBitmap()
                 val newBmpImg = resizeCheck(bmpImg)
                 startActivity(
@@ -216,20 +215,8 @@ class MainActivity: AppCompatActivity() {
                         .putExtra("label", text)
                         .putExtra("img", newBmpImg)
                 )
-            }else if (requestCode == GALLERY_CODE){
-                val img = data?.data
-                if (img != null){
-                    val imageStream = applicationContext.contentResolver.openInputStream(img)
-                    val newImg = BitmapFactory.decodeStream(imageStream)
-                    val newBmp = resizeCheck(newImg)
-                    startActivity(
-                        Intent(this, ArticleActivity::class.java)
-                            .putExtra("label", text)
-                            .putExtra("img", newBmp)
-                    )
-                }
             }
-        }
+        
 
         activityMainBinding.PredictButton.setOnClickListener {
             if (resultCode == RESULT_OK){
