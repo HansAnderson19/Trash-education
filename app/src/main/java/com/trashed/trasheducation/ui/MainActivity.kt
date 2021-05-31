@@ -136,19 +136,6 @@ class MainActivity: AppCompatActivity() {
         }
     }
 
-    private fun uploadImage(){
-        val filename: String? = ImageURI.getLastPathSegment()
-        val ref: StorageReference = reference.child("Images/$filename")
-
-        ref.putFile(ImageURI)
-            .addOnSuccessListener {
-                Toast.makeText(this@MainActivity, "Successfully Upload", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener{
-                Toast.makeText(this@MainActivity, "Failed to Upload", Toast.LENGTH_SHORT).show()
-            }
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -164,6 +151,8 @@ class MainActivity: AppCompatActivity() {
                 activityMainBinding.PreviewImage.setImageURI(data?.data)
             }
         }
+
+
 
         activityMainBinding.ArticleButton.setOnClickListener{
             val text = activityMainBinding.Text2.text
@@ -210,6 +199,19 @@ class MainActivity: AppCompatActivity() {
             checkPredictClick(true)
         }
 
+    }
+
+    private fun uploadImage(){
+        val filename: String? = ImageURI.getLastPathSegment()
+        val ref: StorageReference = reference.child("Images/$filename")
+
+        ref.putFile(ImageURI)
+            .addOnSuccessListener {
+                Toast.makeText(this@MainActivity, "Successfully Upload", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener{
+                Toast.makeText(this@MainActivity, "Failed to Upload", Toast.LENGTH_SHORT).show()
+            }
     }
 
     override fun onResume() {
