@@ -59,7 +59,7 @@ class ArticleActivity :AppCompatActivity(){
         youtubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener(){
             override fun onReady(youTubePlayer: YouTubePlayer) {
                 super.onReady(youTubePlayer)
-                val videoId =  articleResponse.video
+                val videoId = articleResponse.video
                 youTubePlayer.loadVideo(videoId, 0F)
             }
         })

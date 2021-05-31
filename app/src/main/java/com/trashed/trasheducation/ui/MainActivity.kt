@@ -82,7 +82,7 @@ class MainActivity: AppCompatActivity() {
         }
 
         activityMainBinding.ReloadButton.setOnClickListener {
-            checkPredictClick(state)
+            predictAgain()
         }
 
         //Download model function
@@ -141,6 +141,11 @@ class MainActivity: AppCompatActivity() {
 
         val img = activityMainBinding.PreviewImage
         state = true
+
+        val imgs = data?.data
+        if (imgs != null){
+            ImageURI = imgs
+        }
 
         if (resultCode == RESULT_OK){
             if (requestCode == CAMERA_CODE){
@@ -309,5 +314,15 @@ class MainActivity: AppCompatActivity() {
             activityMainBinding.ArticleButton.visibility = View.INVISIBLE
             activityMainBinding.ReloadButton.visibility = View.INVISIBLE
         }
+    }
+
+    private fun predictAgain(){
+        activityMainBinding.PredictButton.visibility = View.INVISIBLE
+        activityMainBinding.TakePictureButton.visibility = View.VISIBLE
+        activityMainBinding.SelectImageButton.visibility = View.VISIBLE
+        activityMainBinding.Text2.visibility = View.INVISIBLE
+        activityMainBinding.Text3.visibility = View.INVISIBLE
+        activityMainBinding.ArticleButton.visibility = View.INVISIBLE
+        activityMainBinding.ReloadButton.visibility = View.INVISIBLE
     }
 }
