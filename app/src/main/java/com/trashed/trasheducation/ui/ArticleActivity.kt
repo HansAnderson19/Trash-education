@@ -20,6 +20,7 @@ class ArticleActivity :AppCompatActivity(){
 
     private lateinit var activityArticleBinding: ActivityArticleBinding
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityArticleBinding = ActivityArticleBinding.inflate(layoutInflater)
@@ -44,6 +45,8 @@ class ArticleActivity :AppCompatActivity(){
     }
 
     private fun putDataView(articleResponse: ArticleResponse){
+        val text = intent.getStringExtra("label")
+        activityArticleBinding.TrashLabel.text = text
         activityArticleBinding.TrashArticle.text = articleResponse.explanation
         activityArticleBinding.ImpactArticle.text = articleResponse.impact
         activityArticleBinding.OvercomeArticle.text = articleResponse.overcome
