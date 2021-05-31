@@ -1,11 +1,9 @@
 package com.trashed.trasheducation.ui
 
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -15,9 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
-import androidx.core.view.drawToBitmap
 import com.google.firebase.ml.common.modeldownload.FirebaseModelDownloadConditions
 import com.google.firebase.ml.common.modeldownload.FirebaseModelManager
 import com.google.firebase.ml.custom.FirebaseCustomRemoteModel
@@ -54,8 +50,7 @@ class MainActivity: AppCompatActivity() {
     private val IMAGE_MEAN = 128
     private val IMAGE_STD = 128.0f
 
-    private var imageBitmap: Bitmap? = null
-
+    var ImageUri: Uri?  = null
 
     companion object{
         const val CAMERA_CODE = 98
@@ -81,13 +76,14 @@ class MainActivity: AppCompatActivity() {
             gallery()
         }
 
-
         activityMainBinding.BackButton.setOnClickListener{
             val intent = Intent(this, MenuActivity::class.java)
             startActivity(intent)
         }
 
-
+        activityMainBinding.ReloadButton.setOnClickListener {
+            checkPredictClick(state)
+        }
 
         //Download model function
         val remoteModel = FirebaseCustomRemoteModel.Builder("trash_edu").build()
@@ -108,38 +104,8 @@ class MainActivity: AppCompatActivity() {
                     }
             }
             .addOnFailureListener {
-                Log.i("Info","Failed to download model")
+                Toast.makeText(this@MainActivity, "Failed to download model", Toast.LENGTH_SHORT).show()
             }
-
-        if (savedInstanceState != null){
-            val mBitmap = savedInstanceState.getParcelable<Bitmap>("bitmap")
-            activityMainBinding.PreviewImage.setImageBitmap(mBitmap)
-        }
-    }
-
-    private fun resizeCheck(bmp: Bitmap): Bitmap{
-        var width = bmp.width
-        var height = bmp.height
-
-        if ((bmp.width * bmp.height) > 1024000){
-            var intScale = 0f
-            if (bmp.width > bmp.height){
-//                intScale = (bmp.width / bmp.height).toFloat()
-//                width = ((400 * intScale) + 400).toInt()
-                width = 600
-                height = 400
-            }else if (bmp.width < bmp.height){
-                /*intScale = (bmp.height / bmp.width).toFloat()
-                height = ((400 * intScale) + 400).toInt()*/
-                height = 600
-                width = 400
-            }else if (bmp.width == bmp.height){
-                width = 480
-                height = 480
-            }
-        }
-
-        return Bitmap.createScaledBitmap(bmp, width, height, true)
     }
 
     private fun camera(){
@@ -172,7 +138,7 @@ class MainActivity: AppCompatActivity() {
 
     private fun uploadImage(){
         val filename: String? = ImageURI.getLastPathSegment()
-        val ref: StorageReference = reference.child("Images/"+ filename)
+        val ref: StorageReference = reference.child("Images/$filename")
 
         ref.putFile(ImageURI)
             .addOnSuccessListener {
@@ -193,29 +159,19 @@ class MainActivity: AppCompatActivity() {
             if (requestCode == CAMERA_CODE){
                 checkStateLayout(state)
                 img.setImageBitmap(data?.extras?.get("data") as Bitmap)
-                imageBitmap = data?.extras?.get("data") as Bitmap
             }else if (requestCode == GALLERY_CODE){
                 checkStateLayout(state)
-                ImageURI = data?.data!!
-                activityMainBinding.PreviewImage.setImageURI(ImageURI)
-                if (ImageURI != null){
-                    val imageStream = applicationContext.contentResolver.openInputStream(ImageURI)
-                    val bmpImage = BitmapFactory.decodeStream(imageStream)
-                    imageBitmap = bmpImage
-                }
+                activityMainBinding.PreviewImage.setImageURI(data?.data)
             }
         }
 
         activityMainBinding.ArticleButton.setOnClickListener{
             val text = activityMainBinding.Text2.text
-                val bmpImg = activityMainBinding.PreviewImage.drawable.toBitmap()
-                val newBmpImg = resizeCheck(bmpImg)
-                startActivity(
-                    Intent(this, ArticleActivity::class.java)
-                        .putExtra("label", text)
-                        .putExtra("img", newBmpImg)
-                )
-            }
+            startActivity(
+                Intent(this, ArticleActivity::class.java)
+                    .putExtra("label", text)
+            )
+        }
         
 
         activityMainBinding.PredictButton.setOnClickListener {
@@ -251,6 +207,7 @@ class MainActivity: AppCompatActivity() {
                     }
                 }
             }
+            checkPredictClick(true)
         }
 
     }
@@ -312,9 +269,9 @@ class MainActivity: AppCompatActivity() {
                 }
                 val roundOff = String.format("%.2f", max)
                 result = "$keyLoop $roundOff"
-                var real = "$keyLoop"
+                val real = keyLoop
                 Log.i("Info", "The label is $result")
-                activityMainBinding.Text2.text = "$real"
+                activityMainBinding.Text2.text = real
                 modelOutput = TensorBuffer.createFixedSize(intArrayOf(1, 6), DataType.FLOAT32)
             }
         }
@@ -325,18 +282,30 @@ class MainActivity: AppCompatActivity() {
             activityMainBinding.PredictButton.visibility = View.VISIBLE
             activityMainBinding.Text2.visibility = View.VISIBLE
             activityMainBinding.Text3.visibility = View.VISIBLE
-            activityMainBinding.ArticleButton.visibility = View.VISIBLE
+            activityMainBinding.ArticleButton.visibility = View.INVISIBLE
+            activityMainBinding.ReloadButton.visibility = View.INVISIBLE
         }else{
             activityMainBinding.PredictButton.visibility = View.INVISIBLE
             activityMainBinding.Text2.visibility = View.INVISIBLE
             activityMainBinding.Text3.visibility = View.INVISIBLE
             activityMainBinding.ArticleButton.visibility = View.INVISIBLE
+            activityMainBinding.ReloadButton.visibility = View.INVISIBLE
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        if (imageBitmap != null) outState.putParcelable("bitmap", imageBitmap)
+    private fun checkPredictClick(check: Boolean){
+        if (check){
+            activityMainBinding.PredictButton.visibility = View.INVISIBLE
+            activityMainBinding.TakePictureButton.visibility = View.INVISIBLE
+            activityMainBinding.SelectImageButton.visibility = View.INVISIBLE
+            activityMainBinding.ArticleButton.visibility = View.VISIBLE
+            activityMainBinding.ReloadButton.visibility = View.VISIBLE
+        }else{
+            activityMainBinding.PredictButton.visibility = View.VISIBLE
+            activityMainBinding.TakePictureButton.visibility = View.VISIBLE
+            activityMainBinding.SelectImageButton.visibility = View.VISIBLE
+            activityMainBinding.ArticleButton.visibility = View.INVISIBLE
+            activityMainBinding.ReloadButton.visibility = View.INVISIBLE
+        }
     }
-
 }

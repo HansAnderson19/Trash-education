@@ -16,8 +16,9 @@ class RemoteDataSource {
                 val link1 = snapshot.child("link1").getValue().toString()
                 val link2 = snapshot.child("link2").getValue().toString()
                 val video = snapshot.child("video").getValue().toString()
+                val photo = snapshot.child("image").getValue().toString()
 
-                val list = ArticleResponse(explanation, impact, overcome, link1, link2, video)
+                val list = ArticleResponse(explanation, impact, overcome, link1, link2, video, photo)
                 callback.onArticleReceived(list)
             }
 

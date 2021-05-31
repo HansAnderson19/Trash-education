@@ -10,5 +10,6 @@ data class ArticleResponse(
     var overcome: String,
     var link1: String,
     var link2: String,
-    var video: String
+    var video: String,
+    var photo: String
 ): Parcelable

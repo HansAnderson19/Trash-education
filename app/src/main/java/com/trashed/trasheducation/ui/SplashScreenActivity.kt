@@ -4,10 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.WindowManager
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import com.trashed.trasheducation.MainActivity
 import com.trashed.trasheducation.R
 
 

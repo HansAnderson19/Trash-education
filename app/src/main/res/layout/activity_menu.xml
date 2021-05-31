@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -15,7 +15,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.879"
-        app:srcCompat="@drawable/trashed_font" />
+        app:srcCompat="@drawable/trashed_font"
+        android:contentDescription="@string/image_preview" />
 
     <TextView
         android:id="@+id/textView3"
@@ -24,9 +25,9 @@
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
         android:fontFamily="@font/semibold"
-        android:text="Lets learn about garbage"
+        android:text="@string/lets_learn_about_garbage"
         android:textColor="@color/gray"
-        android:textSize="30dp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,9 +39,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/regular"
-        android:text="Hi, There!"
+        android:text="@string/hi_there"
         android:textColor="@color/gray"
-        android:textSize="25dp"
+        android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/textView3"
         app:layout_constraintEnd_toEndOf="@+id/textView3"
         app:layout_constraintHorizontal_bias="0.0"
@@ -55,10 +56,10 @@
         android:layout_marginBottom="36dp"
         android:background="@drawable/rectangle_filled"
         android:fontFamily="@font/semibold"
-        android:text="Start!"
+        android:text="@string/start"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="17dp"
+        android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.515"

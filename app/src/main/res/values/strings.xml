@@ -12,4 +12,21 @@
     <string name="decsription">Description</string>
     <string name="handling">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacus pretium sem magna. Adipiscing tincidunt nunc, et quis tempor, pretium ridiculus facilisi nisl. Non congue nulla phasellus adipiscing. Mi lacus sit fermentum, velit. Ut nibh in auctor tellus. Eu risus id ullamcorper urna auctor. Enim ut dignissim et ante turpis erat urna ornare. Aenean et elit aliquam ac massa. Feugiat eget semper nulla id nec vitae. Dignissim euismod elementum senectus hendrerit sagittis ultricies magna nulla. Luctus gravida id elementum pharetra ornare. Tellus leo morbi at imperdiet morbi congue sapien morbi. In augue platea adipiscing interdum vel, nisl turpis ornare sit. Et at nulla dui elit. Neque quam amet, vel amet tristique metus pretium non nulla. Odio neque, lacus ac enim augue aliquam vulputate purus. Varius sollicitudin imperdiet ac porttitor magna sapien egestas malesuada aenean. Proin egestas a pellentesque vitae. Cursus enim sit viverra quisque morbi. Sit eget in in id vulputate lorem mauris ac.</string>
     <string name="view">View More</string>
+    <string name="image_preview">Image Preview</string>
+    <string name="impact">Impact</string>
+    <string name="how_to_overcome_it">How to overcome it?</string>
+    <string name="see_more_article">See More Article:</string>
+    <string name="first_article">First Article</string>
+    <string name="second_article">Second Article</string>
+    <string name="video">Video:</string>
+    <string name="get_to_know_the_garbage">Get to know the garbage!</string>
+    <string name="take_picture">Take Picture</string>
+    <string name="select_images">Select Images</string>
+    <string name="predict">Predict!</string>
+    <string name="type_of_garbage">Type of Garbage:</string>
+    <string name="see_article">See Article</string>
+    <string name="predict_again">Predict Again</string>
+    <string name="lets_learn_about_garbage">Lets learn about garbage</string>
+    <string name="hi_there">Hi, There!</string>
+    <string name="start">Start!</string>
 </resources>
