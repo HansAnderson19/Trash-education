@@ -1,16 +1,23 @@
 package com.trashed.trasheducation.ui
 
 import android.os.Bundle
-import android.webkit.WebView
 import androidx.appcompat.app.AppCompatActivity
-import com.trashed.trasheducation.R
+import com.trashed.trasheducation.databinding.ActivityWebBinding
 
 class WebActivity: AppCompatActivity(){
+
+    private lateinit var activityWebBinding: ActivityWebBinding
+
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_web)
+        activityWebBinding = ActivityWebBinding.inflate(layoutInflater)
+        setContentView(activityWebBinding.root)
 
-        val webView = findViewById<WebView>(R.id.webview)
-        webView.loadUrl("")
+        val url = intent.getStringExtra("link")
+
+        val webView = activityWebBinding.webview
+        if (url != null){
+            webView.loadUrl(url)
+        }
     }
 }

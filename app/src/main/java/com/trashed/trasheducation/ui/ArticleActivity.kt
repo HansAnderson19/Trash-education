@@ -3,10 +3,8 @@ package com.trashed.trasheducation.ui
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.trashed.trasheducation.R
 import com.trashed.trasheducation.data.source.remote.response.ArticleResponse
 import com.trashed.trasheducation.databinding.ActivityArticleBinding
 import com.trashed.trasheducation.ui.viewModel.ArticleViewModel
@@ -22,7 +20,7 @@ class ArticleActivity :AppCompatActivity(){
         activityArticleBinding = ActivityArticleBinding.inflate(layoutInflater)
         setContentView(activityArticleBinding.root)
 
-        var backButton = findViewById(R.id.BackButton2) as Button
+        val backButton = activityArticleBinding.BackButton2
         val text = intent.getStringExtra("label")
         val img: Bitmap? = intent.getParcelableExtra("img")
         if (img != null){
@@ -38,7 +36,7 @@ class ArticleActivity :AppCompatActivity(){
             })
         }
 
-        backButton.setOnClickListener(){
+        backButton.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
@@ -48,6 +46,22 @@ class ArticleActivity :AppCompatActivity(){
     private fun putDataView(articleResponse: ArticleResponse){
         activityArticleBinding.ImpactArticle.text = articleResponse.impact
         activityArticleBinding.OvercomeArticle.text = articleResponse.overcome
-        activityArticleBinding.LinkArticle.text = articleResponse.link1
+
+        activityArticleBinding.link1.setOnClickListener {
+            val link: String = articleResponse.link1
+            startActivity(
+                Intent(this@ArticleActivity, WebActivity::class.java)
+                    .putExtra("link" ,link)
+            )
+        }
+
+        activityArticleBinding.link2.setOnClickListener {
+            val link: String = articleResponse.link2
+            startActivity(
+                Intent(this@ArticleActivity, WebActivity::class.java)
+                    .putExtra("link", link)
+            )
+        }
+
     }
 }
