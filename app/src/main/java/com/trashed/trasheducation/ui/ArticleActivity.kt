@@ -5,6 +5,9 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import com.trashed.trasheducation.data.source.remote.response.ArticleResponse
 import com.trashed.trasheducation.databinding.ActivityArticleBinding
 import com.trashed.trasheducation.ui.viewModel.ArticleViewModel
@@ -46,6 +49,16 @@ class ArticleActivity :AppCompatActivity(){
     private fun putDataView(articleResponse: ArticleResponse){
         activityArticleBinding.ImpactArticle.text = articleResponse.impact
         activityArticleBinding.OvercomeArticle.text = articleResponse.overcome
+
+        val youtubePlayerView: YouTubePlayerView = activityArticleBinding.youtubeVideoPlayer
+        lifecycle.addObserver(youtubePlayerView)
+        youtubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener(){
+            override fun onReady(youTubePlayer: YouTubePlayer) {
+                super.onReady(youTubePlayer)
+                val videoId =  "zYxhzxsPioc"
+                youTubePlayer.loadVideo(videoId, 0F)
+            }
+        })
 
         activityArticleBinding.link1.setOnClickListener {
             val link: String = articleResponse.link1
