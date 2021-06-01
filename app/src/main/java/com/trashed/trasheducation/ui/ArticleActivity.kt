@@ -2,6 +2,7 @@ package com.trashed.trasheducation.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -45,6 +46,7 @@ class ArticleActivity :AppCompatActivity(){
     }
 
     private fun putDataView(articleResponse: ArticleResponse){
+        check(true)
         val text = intent.getStringExtra("label")
         activityArticleBinding.TrashLabel.text = text
         activityArticleBinding.TrashArticle.text = articleResponse.explanation
@@ -82,6 +84,44 @@ class ArticleActivity :AppCompatActivity(){
                     .putExtra("link", link)
             )
         }
-
+        check(false)
     }
+
+    private fun check(state: Boolean){
+        if (state){
+            activityArticleBinding.pbMain.visibility = View.VISIBLE
+            activityArticleBinding.PreviewImage.visibility = View.INVISIBLE
+            activityArticleBinding.TrashArticle.visibility = View.INVISIBLE
+            activityArticleBinding.TrashLabel.visibility = View.INVISIBLE
+            activityArticleBinding.ImpactArticle.visibility = View.INVISIBLE
+            activityArticleBinding.ImpactLabel.visibility = View.INVISIBLE
+            activityArticleBinding.OvercomeArticle.visibility = View.INVISIBLE
+            activityArticleBinding.OvercomeLabel.visibility = View.INVISIBLE
+            activityArticleBinding.LinkLabel.visibility = View.INVISIBLE
+            activityArticleBinding.link1.visibility = View.INVISIBLE
+            activityArticleBinding.link2.visibility = View.INVISIBLE
+            activityArticleBinding.VideoLabel.visibility = View.INVISIBLE
+            activityArticleBinding.youtubeVideoPlayer.visibility = View.INVISIBLE
+        }else{
+            activityArticleBinding.pbMain.visibility = View.INVISIBLE
+            activityArticleBinding.layoutId.visibility = View.VISIBLE
+            activityArticleBinding.PreviewImage.visibility = View.VISIBLE
+            activityArticleBinding.TrashArticle.visibility = View.VISIBLE
+            activityArticleBinding.TrashLabel.visibility = View.VISIBLE
+            activityArticleBinding.ImpactArticle.visibility = View.VISIBLE
+            activityArticleBinding.ImpactLabel.visibility = View.VISIBLE
+            activityArticleBinding.OvercomeArticle.visibility = View.VISIBLE
+            activityArticleBinding.OvercomeLabel.visibility = View.VISIBLE
+            activityArticleBinding.LinkLabel.visibility = View.VISIBLE
+            activityArticleBinding.link1.visibility = View.VISIBLE
+            activityArticleBinding.link2.visibility = View.VISIBLE
+            activityArticleBinding.VideoLabel.visibility = View.VISIBLE
+            activityArticleBinding.youtubeVideoPlayer.visibility = View.VISIBLE
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
 }

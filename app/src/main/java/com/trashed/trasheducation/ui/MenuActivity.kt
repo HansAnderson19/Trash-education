@@ -19,4 +19,8 @@ class MenuActivity : AppCompatActivity() {
             startActivity(Intent(this, MainActivity::class.java))
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
 }

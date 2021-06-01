@@ -91,6 +91,7 @@ class MainActivity: AppCompatActivity() {
         val conditions = FirebaseModelDownloadConditions.Builder()
             .build()
         Log.d("Info", conditions.toString())
+        checkDownload(true)
         FirebaseModelManager.getInstance().download(remoteModel, conditions)
             .addOnSuccessListener {
                 Log.i("Info", "Switching to download model")
@@ -102,6 +103,8 @@ class MainActivity: AppCompatActivity() {
                             interpreter = Interpreter(model, options)
                         }
                     }
+                checkDownload(false)
+
             }
             .addOnFailureListener {
                 Toast.makeText(this@MainActivity, "Failed to download model", Toast.LENGTH_SHORT).show()
@@ -324,5 +327,36 @@ class MainActivity: AppCompatActivity() {
         activityMainBinding.Text3.visibility = View.INVISIBLE
         activityMainBinding.ArticleButton.visibility = View.INVISIBLE
         activityMainBinding.ReloadButton.visibility = View.INVISIBLE
+    }
+
+    private fun checkDownload(state: Boolean){
+        if (state){
+            activityMainBinding.Text1.visibility = View.INVISIBLE
+            activityMainBinding.PreviewImage.visibility = View.INVISIBLE
+            activityMainBinding.PredictButton.visibility = View.INVISIBLE
+            activityMainBinding.TakePictureButton.visibility = View.INVISIBLE
+            activityMainBinding.SelectImageButton.visibility = View.INVISIBLE
+            activityMainBinding.Text2.visibility = View.INVISIBLE
+            activityMainBinding.Text3.visibility = View.INVISIBLE
+            activityMainBinding.ArticleButton.visibility = View.INVISIBLE
+            activityMainBinding.ReloadButton.visibility = View.INVISIBLE
+            activityMainBinding.pbMain.visibility = View.VISIBLE
+            activityMainBinding.textDownload1.visibility = View.VISIBLE
+            activityMainBinding.textDownload2.visibility = View.VISIBLE
+            activityMainBinding.BackButton.visibility = View.INVISIBLE
+        }else{
+            activityMainBinding.Text1.visibility = View.VISIBLE
+            activityMainBinding.PreviewImage.visibility = View.VISIBLE
+            activityMainBinding.TakePictureButton.visibility = View.VISIBLE
+            activityMainBinding.SelectImageButton.visibility = View.VISIBLE
+            activityMainBinding.pbMain.visibility = View.INVISIBLE
+            activityMainBinding.textDownload1.visibility = View.INVISIBLE
+            activityMainBinding.textDownload2.visibility = View.INVISIBLE
+            activityMainBinding.BackButton.visibility = View.VISIBLE
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 }

@@ -29,4 +29,6 @@
     <string name="lets_learn_about_garbage">Lets learn about garbage</string>
     <string name="hi_there">Hi, There!</string>
     <string name="start">Start!</string>
+    <string name="downloadText">Please wait a moment</string>
+    <string name="downloadText2">There some file need to fetch</string>
 </resources>
