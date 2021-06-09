@@ -36,7 +36,7 @@ https://github.com/HansAnderson19/Trash-education/tree/Machine_Learning
     - Register App by inputting package name
     - Download config file
     - Adding Firebase SDK
-3. Setting up the service that we want to use, in this case we use <b>Firebase Storage</b> for saving image and ML model, <b>Real-time Database</b> to store Article data and Image URI, <b>Firebase Function</b> to trigger Firebase Storage whenever a new image uploaded will upload Image data Real-time Database.
+3. Setting up the service that we want to use, in this case we use <b>Cloud Storage</b> for saving image and ML model, <b>Real-time Database</b> to store Article data and Image URI, <b>Cloud Function</b> to trigger Firebase Storage whenever a new image uploaded will upload Image data Real-time Database.
 4. Deploying custom model with tflite format to <b>ML Kit</b> in Firebase.
 5. Making Function to download the model in Android app.
 6. Making Predict Function to send image to ML model and retrieve data from ML model in Android App.
