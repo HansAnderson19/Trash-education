@@ -14,7 +14,7 @@ This is a Capstone Project for Bangkit Program 2021
 
 In this project, we use garbage classification data to distinguish the types of garbage according to the photo or image that was inputted. The output of our application is the classification types of the garbage as well as articles and supporting educational video.
 
-We use transfer learning for our image classification methods. The model has been trained using ResNet50V2 architecture. Also we added data augmentation and dropout layers to avoid the overfitting. Furthermore, the callback has been added to to reach up to 99% accuracy in the training session. The model was built to obtain up to 93% validation accuracy.
+We use transfer learning for our image classification methods. The model has been trained using ResNet50V2 architecture. Also we added data augmentation and dropout layers to avoid the overfitting. Furthermore, the callback has been added to to reach up to 99% accuracy in the training session. The model was built to obtain up to 92% validation accuracy.
 
 Dataset that we used from: https://www.kaggle.com/asdasdasasdas/garbage-classification
 
