@@ -14,18 +14,20 @@ This is a Capstone Project for Bangkit Program 2021
 
 In this project, we use garbage classification data to distinguish the types of garbage according to the photo or image that was inputted. The output of our application is the classification types of the garbage as well as articles and supporting educational video.
 
-We use transfer learning for our image classification methods. The model has been trained using ResNet50V2 architecture. Also we added data augmentation and dropout layers to avoid the overfitting. Furthermore, the callback has been added to prevent wasting time in the training session. The model was built to obtain up to 93% validation accuracy.
+We use transfer learning for our image classification methods. The model has been trained using ResNet50V2 architecture. Also we added data augmentation and dropout layers to avoid the overfitting. Furthermore, the callback has been added to to reach up to 99% accuracy in the training session. The model was built to obtain up to 93% validation accuracy.
 
 Dataset that we used from: https://www.kaggle.com/asdasdasasdas/garbage-classification
+
+Our project has 3 workflow environments to produce usable applications. The explanations of each are follows:
 
 <b>Machine Learning Workflow:</b>
 1. Download the datasers        
 2. The machine learning model was done in google colaboratory, you can see the process of our model making in [Final_Project_Bangkit_Resnet_Tuning_Process_V4.ipynb](https://github.com/HansAnderson19/Trash-education/blob/Machine_Learning/Final_Project_Bangkit_Resnet_Tuning_Process_V4.ipynb). 
 3. Splitting the dataset into train, validation and test split, see the datasets that already splitted on [Machine_Learning](https://github.com/HansAnderson19/Trash-education/tree/Machine_Learning) branch.
-4. At first, our model could classify 5 image categories, but when we did some experimental tests, there were many misclassifications on the “Trash” category. So, we choose to only use 5 image categories which are “Cardboard”, “Paper”, “Metal”, “Plastic” and “Glass”.
-5. Designing ResNet50V2 architecture using transfer learning. On the last layer, we added dropout layers, a dense layer with 1024 neurons and a dense layer of 5 neurons as the classification layer. We also used callbacks to avoid long training time.
-6. The model generates 99% accuracy on training and 93% on validation dataset.
-7. Next, the model was evaluated on a testing dataset and produced 92% accuracy. There is little difference on the accuracy between validation dataset and testing dataset.
+4. At first, our model could classify 6 image categories, but when we did some experimental tests, there were many misclassifications on the “Trash” category. So, we choose to only use 5 image categories which are “Cardboard”, “Paper”, “Metal”, “Plastic” and “Glass”.
+5. Designing ResNet50V2 architecture using transfer learning. On the last layer, we added dropout layers, a dense layer with 1024 neurons and a dense layer of 5 neurons as the classification layer. We also used callbacks to to reach up to 99% training accuracy.
+6. The model generates 99% accuracy on training and 92% on validation dataset.
+7. Next, the model was evaluated on a testing dataset and produced 93% accuracy. There is little difference on the accuracy between validation dataset and testing dataset.
 8. The ResNet50V2 model is then saved as a TFlite extension using a TFlite converter provided by TensorFlow. This TFlite model is the one to be deployed on android and firebase.
 9. The Dataset, notebook and the saved tflite model has been uploaded to our GitHub repository in [Machine_Learning](https://github.com/HansAnderson19/Trash-education/tree/Machine_Learning) branch.
 
