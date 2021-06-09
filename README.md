@@ -48,7 +48,8 @@ https://github.com/HansAnderson19/Trash-education/tree/Machine_Learning
 4. Install download model and predict function into activity for main function in application
 5. Create Remote Storage that get data source from RealTime Database from Firebase
 6. Set ViewModel, ViewModel Factory and Injection for data distributor
-7. SetUp library and Create VideoPlayer function for youtube player
+7. SetUp library and Create VideoPlayer function for youtube player, we use this library to create the video player
+> https://github.com/PierfrancescoSoffritti/android-youtube-player
 8. Create WebView layout for article material from link
 9. Improved layout and clean some unused layout
 10. Make Loading function for download model and Article layout
